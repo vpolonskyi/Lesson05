@@ -35,7 +35,7 @@ class Person:
         assert check_year(self.birth_year), "Год не может быть меньше 1900 и больше текущего"
 
     def __str__(self):
-        return f"{self.__class__} object: name:{self.full_name} birth_year:{self.birth_year}"
+        return f"{self.__class__} object: full_name:{self.full_name} birth_year:{self.birth_year}"
 
     def __iter__(self):
         return iter([self.full_name, self.birth_year])
@@ -46,7 +46,9 @@ class Person:
     def surname(self):
         return self.full_name.split()[0]
 
-    def age(self, year: int = datetime.date.today().year) -> int:
+    def age(self, year: int = None) -> int:
+        if year is None:
+            year = datetime.date.today().year
         return year - self.birth_year
 
 
@@ -59,8 +61,6 @@ class Employee(Person):
         self.exp = exp
         self.salary = salary
         super().__init__(*args)
-        assert is_name(self.full_name), "Должно быть два слова с большой буквы через пробел"
-        assert check_year(self.birth_year), "Год не может быть меньше 1900 и больше текущего"
         assert exp >= 0, "Опыт не может быть отрицательным"
         assert salary >= 0, "Зарплата не может быть отрицательной"
 
@@ -88,7 +88,7 @@ class ITEmployee(Employee):
 
     def __str__(self):
         try:
-            len(self.skills)
+            self.skills
         except AttributeError:
             return super().__str__()
         else:
@@ -96,7 +96,7 @@ class ITEmployee(Employee):
 
     def __iter__(self):
         try:
-            len(self.skills)
+            self.skills
         except AttributeError:
             return iter(list(super().__iter__()))
         else:
@@ -104,7 +104,7 @@ class ITEmployee(Employee):
 
     def add_skill(self, skill: str):
         try:
-            len(self.skills)
+            self.skills
         except AttributeError:
             self.skills = [skill]
         else:
@@ -112,7 +112,7 @@ class ITEmployee(Employee):
 
     def add_skills(self, skills: list):
         try:
-            len(self.skills)
+            self.skills
         except AttributeError:
             self.skills = skills
         else:
@@ -128,14 +128,13 @@ if __name__ == '__main__':
     p2 = Person("Лапушкина Тамара", 1990)
     p2 = Employee("кларнетист", 4, 1500, *p2)
     p3 = Employee("скрипач", 2, 1200, "Передомов Тимур", 1975)
+    print(p3.full_pos())
     print(p1.full_pos())
     print("Подняли зарплату", p2.full_name, "c", p2.salary, "до ", end="")
     p2.add_salary(300)
     print(p2.salary)
     p1 = ITEmployee(*p1)
+    print(p1)
     p1.add_skill("Лентяй")
     print(p1)
-    p2 = ITEmployee(*p2)
-    p2.add_skills(["py", "go"])
-    print(p2)
-
+    p1.add_skills(["C", "C++"])

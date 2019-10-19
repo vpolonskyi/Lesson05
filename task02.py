@@ -26,8 +26,7 @@ class Point:
         return (self.x ** 2 + self.y ** 2) ** 0.5
 
     def distance_to_point(self, args):
-        x, y = args
-        return ((self.x - x) ** 2 + (self.y - y) ** 2) ** 0.5
+        return ((self.x - args.x) ** 2 + (self.y - args.y) ** 2) ** 0.5
 
     def __str__(self):
         return f"{self.__class__} object: name: {self.x} {self.y}"
