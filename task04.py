@@ -6,15 +6,13 @@ import task01
 class ITEmployee(unittest.TestCase):
 
     def setUp(self) -> None:
-        try:  #А как сделать это правильно?
-            self.res = task01.ITEmployee("арфист", 2, 2300, "зеленухина Любовь", 1979)
-        except AssertionError:
-            pass
-        try:  #А как сделать это правильно?
-            self.res = task01.ITEmployee("арфист", 2, 2300, "Зеленухина Любовь", -979)
-        except AssertionError:
-            pass
         self.res = task01.ITEmployee("арфист", 2, 2300, "Зеленухина Любовь", 1979)
+
+    def testExceptions(self):
+        with self.assertRaises(AssertionError):
+            task01.ITEmployee("арфист", 2, 2300, "зеленухина Любовь", 1979)
+        with self.assertRaises(AssertionError):
+            task01.ITEmployee("арфист", 2, 2300, "Зеленухина Любовь", -979)
 
     def testAttributes(self):
         self.assertEqual(self.res.full_name, "Зеленухина Любовь")
