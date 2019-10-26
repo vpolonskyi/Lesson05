@@ -11,8 +11,7 @@ class ITEmployee(unittest.TestCase):
     def testExceptions(self):
         with self.assertRaises(AssertionError):
             task01.ITEmployee("арфист", 2, 2300, "зеленухина Любовь", 1979)
-        with self.assertRaises(AssertionError):
-            task01.ITEmployee("арфист", 2, 2300, "Зеленухина Любовь", -979)
+        self.assertRaises(AssertionError, task01.ITEmployee, "арфист", 2, 2300, "Зеленухина Любовь", -979)
 
     def testAttributes(self):
         self.assertEqual(self.res.full_name, "Зеленухина Любовь")
